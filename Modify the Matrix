@@ -1,0 +1,53 @@
+/**
+ * Return an array of arrays of size *returnSize.
+ * The sizes of the arrays are returned as *returnColumnSizes array.
+ * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
+ */
+#include <stdlib.h>
+
+int** modifiedMatrix(int** matrix, int matrixSize, int* matrixColSize, int* returnSize, int** returnColumnSizes) {
+    int i, j;
+
+    // Allocate memory for the answer matrix
+    int** answer = (int**)malloc(sizeof(int*) * matrixSize); 
+    for (i = 0; i < matrixSize; i++) {
+        answer[i] = (int*)malloc(sizeof(int) * (*matrixColSize)); 
+    }
+
+    // Copy the input matrix to the answer matrix
+    for (i = 0; i < matrixSize; i++) {
+        for (j = 0; j < *matrixColSize; j++) {
+            answer[i][j] = matrix[i][j];
+        }
+    }
+
+    // Modify the matrix column-wise
+    for (j = 0; j < *matrixColSize; j++) {
+        int max = -1;
+
+        // Find the maximum value in the current column
+        for (i = 0; i < matrixSize; i++) {
+            if (answer[i][j] > max) {
+                max = answer[i][j];
+            }
+        }
+
+        // Replace -1 in the column with the maximum value
+        for (i = 0; i < matrixSize; i++) {
+            if (answer[i][j] == -1) {
+                answer[i][j] = max;
+            }
+        }
+    }
+
+    // Set returnSize and allocate returnColumnSizes
+    *returnSize = matrixSize;
+    *returnColumnSizes = (int*)malloc(sizeof(int) * matrixSize);
+    for (i = 0; i < matrixSize; i++) {
+        (*returnColumnSizes)[i] = *matrixColSize;
+    }
+
+    return answer;
+}
+
+
