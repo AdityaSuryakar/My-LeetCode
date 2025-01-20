@@ -1,0 +1,44 @@
+#include <stdlib.h>
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* numberGame(int* nums, int numsSize, int* returnSize) {
+    // Allocate memory for the result array
+    int* result = (int*)malloc(numsSize * sizeof(int));
+    if (!result) return NULL; // Handle memory allocation failure
+
+    // Sort the input array
+    for (int i = 0; i < numsSize - 1; i++) {
+        for (int j = i + 1; j < numsSize; j++) {
+            if (nums[j] < nums[i]) {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
+    }
+
+    int index = 0; // Pointer for the result array
+    int left = 0, right = numsSize - 1; // Two pointers for nums
+
+    while (left <= right) {
+        // Alice removes the minimum (from the left)
+        int aliceChoice = nums[left++];
+        
+        // Bob removes the next minimum (also from the left)
+        int bobChoice = nums[left++];
+        
+        // Bob appends his choice first
+        result[index++] = bobChoice;
+        
+        // Alice appends her choice
+        result[index++] = aliceChoice;
+    }
+
+    // Set the return size
+    *returnSize = numsSize;
+
+    // Return the result array
+    return result;
+}
