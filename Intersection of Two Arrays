@@ -1,0 +1,39 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+#include <stdlib.h>
+#include <stdbool.h>
+int* intersection(int* nums1, int nums1Size, int* nums2, int nums2Size, int* returnSize) 
+{
+    int* result = malloc(sizeof(int) * (nums1Size < nums2Size ? nums1Size : nums2Size));
+    int resultCount = 0;
+
+    for (int i = 0; i < nums1Size; i++) 
+    {
+        for (int j = 0; j < nums2Size; j++) 
+        {
+            if (nums1[i] == nums2[j]) 
+            {
+                // Check if the number is already in the result
+                bool alreadyAdded = false;
+                for (int k = 0; k < resultCount; k++) 
+                {
+                    if (result[k] == nums1[i]) 
+                    {
+                        alreadyAdded = true;
+                        break; // Corrected this line
+                    }
+                }
+                if (!alreadyAdded) 
+                {
+                    result[resultCount++] = nums1[i];
+                }
+                break; // Exit inner loop as the number is already found
+            }
+        }
+    }
+
+    *returnSize = resultCount;
+    return realloc(result, sizeof(int) * resultCount); // Resize to match the result count
+}
+
