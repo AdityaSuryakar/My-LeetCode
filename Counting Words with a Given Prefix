@@ -1,0 +1,26 @@
+#include <string.h>
+int startsWith(const char *word, const char *pref) 
+{
+    while (*pref) 
+    {
+        if (*word == '\0' || *word != *pref) 
+        {
+            return 0; 
+        }
+        word++;
+        pref++;
+    }
+    return 1; 
+}
+int prefixCount(char **words, int wordsSize, char *pref) 
+{
+    int count = 0;
+    for (int i = 0; i < wordsSize; i++) 
+    {
+        if (startsWith(words[i], pref)) 
+        {
+            count++;
+        }
+    }
+    return count;
+}
