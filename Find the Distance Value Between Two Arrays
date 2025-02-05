@@ -1,0 +1,32 @@
+
+int findTheDistanceValue(int* arr1, int arr1Size, int* arr2, int arr2Size, int d) {
+    int i,j,f;
+    int count=0,mi;
+    for(i=0;i<arr1Size;i++)
+    {
+        f=0;
+        for(j=0;j<arr2Size;j++)
+        {
+          mi=arr1[i]-arr2[j];
+            if(mi<0)
+            {
+                mi=mi*(-1);
+
+
+            }
+            if(mi>d)
+            {
+                f++;
+            }
+            else
+            {
+                f--;
+            }
+        }
+        if(f==arr2Size)
+        {
+            count++;
+        }
+    }
+    return count;
+}
