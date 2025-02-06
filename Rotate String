@@ -1,0 +1,17 @@
+bool rotateString(char* s, char* goal) 
+{
+    if(strlen(s)!=strlen(goal))
+    {
+        return false;
+    }
+    char a[2*strlen(s)+1];
+    strcpy(a,s);
+    strcat(a,s);
+    if(strstr(a,goal)!=NULL)
+    {
+        return true;
+    }
+    return false;
+    
+    
+}
