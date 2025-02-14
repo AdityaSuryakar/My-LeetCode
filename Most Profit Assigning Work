@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int compareJobs(const void* a, const void* b) {
+    int* jobA = (int*)a;
+    int* jobB = (int*)b;
+    if (jobA[0] == jobB[0]) {
+        return jobB[1] - jobA[1]; 
+    }
+    return jobA[0] - jobB[0]; 
+}
+
+
+int compareWorkers(const void* a, const void* b) {
+    return (*(int*)a) - (*(int*)b);
+}
+
+
+int maxProfitAssignment(int* difficulty, int difficultySize, int* profit, int profitSize, int* worker, int workerSize) {
+   
+    int jobs[difficultySize][2];
+    for (int i = 0; i < difficultySize; i++) {
+        jobs[i][0] = difficulty[i];
+        jobs[i][1] = profit[i];
+    }
+
+    // Sort jobs by difficulty and profit.
+    qsort(jobs, difficultySize, sizeof(jobs[0]), compareJobs);
+
+    // Sort workers by their ability.
+    qsort(worker, workerSize, sizeof(int), compareWorkers);
+
+    int totalProfit = 0;
+    int jobIndex = 0;
+    int maxProfitSoFar = 0;
+
+    // Assign jobs to workers.
+    for (int i = 0; i < workerSize; i++) {
+        // Update maxProfitSoFar to the best profit for jobs the worker can do.
+        while (jobIndex < difficultySize && jobs[jobIndex][0] <= worker[i]) {
+            if (jobs[jobIndex][1] > maxProfitSoFar) {
+                maxProfitSoFar = jobs[jobIndex][1];
+            }
+            jobIndex++;
+        }
+
+        // Add the best profit this worker can achieve.
+        totalProfit += maxProfitSoFar;
+    }
+
+    return totalProfit;
+}
