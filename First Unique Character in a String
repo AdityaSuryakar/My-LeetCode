@@ -1,0 +1,25 @@
+
+#include <string.h>
+
+int firstUniqChar(char* s) 
+{
+    int size = strlen(s);
+    int freq[26] = {0}; // Array to store the frequency of each character
+    
+    // Count the frequency of each character
+    for (int i = 0; i < size; i++) 
+    {
+        freq[s[i] - 'a']++;
+    }
+    
+    // Find the first unique character
+    for (int i = 0; i < size; i++)
+    {
+        if (freq[s[i] - 'a'] == 1)
+        {
+            return i; // Return the index of the first unique character
+        }
+    }
+    
+    return -1; // Return -1 if no unique character is found
+}
