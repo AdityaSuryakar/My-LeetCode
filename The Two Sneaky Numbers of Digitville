@@ -1,0 +1,41 @@
+#include <stdlib.h>
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* getSneakyNumbers(int* nums, int numsSize, int* returnSize) {
+    int* a = (int*)malloc(sizeof(int) * numsSize); // Allocate memory for worst-case scenario
+    int count, k = 0;
+
+    for (int i = 0; i < numsSize; i++) {
+        int x = nums[i];
+        count = 0;
+
+        // Count occurrences of nums[i]
+        for (int j = 0; j < numsSize; j++) {
+            if (nums[j] == x) {
+                count++;
+            }
+        }
+
+        // Add the number to the array if it appears exactly twice and hasn't been added already
+        if (count == 2) {
+            int alreadyAdded = 0;
+            for (int m = 0; m < k; m++) {
+                if (a[m] == x) {
+                    alreadyAdded = 1;
+                    break;
+                }
+            }
+
+            if (!alreadyAdded) {
+                a[k++] = x;
+            }
+        }
+    }
+
+    // Resize the array to the actual size of sneaky numbers found
+    a = realloc(a, sizeof(int) * k);
+    *returnSize = k;
+    return a;
+}
