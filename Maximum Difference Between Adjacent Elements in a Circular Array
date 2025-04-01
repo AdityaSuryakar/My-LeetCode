@@ -1,0 +1,22 @@
+int maxAdjacentDistance(int* nums, int numsSize) 
+{
+    int max_diff=0;
+    int diff;
+    for(int i=1;i<numsSize;i++)
+    {
+        diff=abs(nums[i]-nums[i-1]);
+        if(diff>max_diff)
+        {
+            max_diff=diff;
+        }
+    }
+    diff=abs(nums[0]-nums[numsSize-1]);
+    if(diff>max_diff)
+    {
+        max_diff=diff;
+    }
+    return max_diff;
+    
+}
+
+
