@@ -1,0 +1,26 @@
+int countPartitions(int* nums, int numsSize) {
+    int diff=0,leftsum,rightsum;
+    int left[numsSize],right[numsSize];
+    int c=0,j=0;
+    int count=0;
+    while(j<numsSize-1)
+    {
+        leftsum=0;
+        rightsum=0;
+    for(int i=0;i<=c;i++){
+        left[i]=nums[i];
+        leftsum +=left[i];
+    }
+        for(int k=c+1;k<numsSize;k++){
+           right[k]=nums[k];
+           rightsum += right[k];
+        }
+        diff=leftsum-rightsum;
+        if(diff%2==0){
+            count++;
+        }
+        c++;
+        j++;
+    }
+    return count;
+}
